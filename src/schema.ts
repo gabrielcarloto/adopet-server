@@ -10,26 +10,34 @@ const typeDefs = gql`
   #   Pets: [Pet]
   # }
 
-  type PetDescription {
-    breed: String
-    age: String
-    size: String
-    behaviour: String
-  }
-
   type Pet {
     createdAt: String
     id: ID
     name: String
     image: String
     location: String
-    description: PetDescription
+    breed: String
+    age: String
+    size: String
+    behaviour: String
     # owner: User
   }
 
   type Query {
     pets: [Pet]
     pet(id: ID): Pet
+  }
+
+  type Mutation {
+    addPet(
+      name: String
+      image: String
+      location: String
+      breed: String
+      age: String
+      size: String
+      behaviour: String
+    ): Pet!
   }
 `;
 
