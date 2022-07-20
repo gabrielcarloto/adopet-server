@@ -7,6 +7,9 @@ const server = new ApolloServer({
   resolvers,
   csrfPrevention: true,
   cache: 'bounded',
+  cors: {
+    origin: ['https://adopet-lovat.vercel.app', 'http://localhost:3000'],
+  },
 });
 
 server.listen(process.env.PORT || 4000).then(({ url }) => {
