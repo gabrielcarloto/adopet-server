@@ -10,6 +10,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  createdAt DateTime @default(now())
+  id        String   @id @default(uuid())
+  username  String   @unique
+  password  String
+  name      String
+  picture   String?
+  pets      Pet[]
+}
+
 model Pet {
   createdAt DateTime @default(now())
   id        String   @id @default(uuid())
@@ -20,4 +30,6 @@ model Pet {
   age       String
   size      String
   behaviour String
+  userId    String
+  User      User     @relation(fields: [userId], references: [id])
 }

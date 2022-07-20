@@ -1,17 +1,28 @@
+import argon2 from 'argon2';
 import prisma from './prisma';
 
 interface PetByIdQuery {
   id: string;
 }
 
-interface PetsMutationArgs {
-  name: string;
-  image: string;
-  location: string;
-  breed: string;
-  age: string;
-  size: string;
-  behaviour: string;
+interface AddPetMutationArgs {
+  petData: {
+    name: string;
+    image: string;
+    location: string;
+    breed: string;
+    age: string;
+    size: string;
+    behaviour: string;
+  };
+}
+
+interface AddUserMutationArgs {
+  userData: {
+    username: string;
+    password: string;
+    name: string;
+  };
 }
 
 const resolvers = {
@@ -31,12 +42,31 @@ const resolvers = {
   },
 
   Mutation: {
-    addPet: async (_parent: any, args: PetsMutationArgs) => {
+    addPet: async (_parent: any, { petData }: AddPetMutationArgs) => {
       const response = await prisma.pet.create({
-        data: args,
+        data: {
+          ...petData,
+          User: {
+            connect: { id: '' },
+          },
+        },
       });
 
       return response;
+    },
+
+    addUser: async (_parent: any, { userData }: AddUserMutationArgs) => {
+      try {
+        const hashedPassword = await argon2.hash(userData.password);
+
+        const response = await prisma.user.create({
+          data: { ...userData, password: hashedPassword },
+        });
+
+        return response;
+      } catch (err) {
+        return err;
+      }
     },
   },
 };

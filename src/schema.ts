@@ -1,26 +1,26 @@
 import { gql } from 'apollo-server';
 
 const typeDefs = gql`
-  # type User {
-  #   createdAt: String
-  #   id: ID
-  #   username: String
-  #   password: String
-  #   name: String
-  #   Pets: [Pet]
-  # }
+  type User {
+    id: ID!
+    createdAt: String!
+    username: String!
+    name: String!
+    picture: String
+    pets: [Pet]
+  }
 
   type Pet {
-    createdAt: String
-    id: ID
-    name: String
-    image: String
-    location: String
-    breed: String
-    age: String
-    size: String
-    behaviour: String
-    # owner: User
+    id: ID!
+    createdAt: String!
+    name: String!
+    image: String!
+    location: String!
+    breed: String!
+    age: String!
+    size: String!
+    behaviour: String!
+    owner: User!
   }
 
   type Query {
@@ -28,16 +28,25 @@ const typeDefs = gql`
     pet(id: ID): Pet
   }
 
+  input addPetInput {
+    name: String
+    image: String
+    location: String
+    breed: String
+    age: String
+    size: String
+    behaviour: String
+  }
+
+  input addUserInput {
+    username: String
+    name: String
+    password: String
+  }
+
   type Mutation {
-    addPet(
-      name: String
-      image: String
-      location: String
-      breed: String
-      age: String
-      size: String
-      behaviour: String
-    ): Pet!
+    addPet(petData: addPetInput): Pet!
+    addUser(userData: addUserInput): User!
   }
 `;
 
