@@ -8,7 +8,11 @@ const server = new ApolloServer({
   csrfPrevention: true,
   cache: 'bounded',
   cors: {
-    origin: ['https://adopet-lovat.vercel.app', 'http://localhost:3000'],
+    origin: [
+      'https://adopet-lovat.vercel.app',
+      'https://studio.apollographql.com',
+      'http://localhost:3000',
+    ],
   },
 });
 
