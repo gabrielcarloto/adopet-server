@@ -30,6 +30,6 @@ model Pet {
   age       String
   size      String
   behaviour String
-  userId    String
-  User      User     @relation(fields: [userId], references: [id])
+  ownerId   String
+  owner     User     @relation(fields: [ownerId], references: [id])
 }

@@ -14,6 +14,7 @@ interface AddPetMutationArgs {
     age: string;
     size: string;
     behaviour: string;
+    ownerId: string;
   };
 }
 
@@ -45,9 +46,26 @@ const resolvers = {
     addPet: async (_parent: any, { petData }: AddPetMutationArgs) => {
       const response = await prisma.pet.create({
         data: {
-          ...petData,
-          User: {
-            connect: { id: '' },
+          name: petData.name,
+          image: petData.image,
+          location: petData.location,
+          age: petData.age,
+          size: petData.size,
+          breed: petData.breed,
+          behaviour: petData.behaviour,
+          owner: {
+            connect: { id: petData.ownerId },
+          },
+        },
+        include: {
+          owner: {
+            select: {
+              id: true,
+              createdAt: true,
+              username: true,
+              name: true,
+              picture: true,
+            },
           },
         },
       });

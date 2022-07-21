@@ -36,6 +36,7 @@ const typeDefs = gql`
     age: String
     size: String
     behaviour: String
+    ownerId: ID
   }
 
   input addUserInput {
