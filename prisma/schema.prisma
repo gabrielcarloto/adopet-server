@@ -18,18 +18,26 @@ model User {
   name      String
   picture   String?
   pets      Pet[]
+  tokens    Token[]
+}
+
+model Token {
+  id       String @id @default(uuid())
+  token    String @unique
+  username String
+  user     User   @relation(fields: [username], references: [username])
 }
 
 model Pet {
-  createdAt DateTime @default(now())
-  id        String   @id @default(uuid())
-  name      String
-  image     String
-  location  String
-  breed     String
-  age       String
-  size      String
-  behaviour String
-  ownerId   String
-  owner     User     @relation(fields: [ownerId], references: [id])
+  createdAt     DateTime @default(now())
+  id            String   @id @default(uuid())
+  name          String
+  image         String
+  location      String
+  breed         String
+  age           String
+  size          String
+  behaviour     String
+  ownerUsername String
+  owner         User     @relation(fields: [ownerUsername], references: [username])
 }
